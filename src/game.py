@@ -22,7 +22,7 @@ class Being:
     def train(self):
         time.sleep(5)
         train_exp = self.level*25
-        self.exp_to_next_level = self.exp_to_next_level - train_exp
+        self.exp_to_next_level = self.exp_to_next_level - 100
         if self.exp_to_next_level <= 0:
             self.level += 1
             self.exp_to_next_level = self.level*100
