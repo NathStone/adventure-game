@@ -43,9 +43,8 @@ class Being:
     
     def heal(self):
         heal = self.level*10
-        heal_quart = math.floor(heal/4)
-        heal_3_quart = heal - heal_quart
-        heal_amount = random.randint(heal_quart, heal_3_quart)
+        heal_half = heal/2
+        heal_amount = random.randint(1, heal_half)
         self.health = self.health + heal_amount
         print(f"Health increased by {heal_amount}")
         print(" ")
