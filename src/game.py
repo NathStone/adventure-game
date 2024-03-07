@@ -20,6 +20,8 @@ class Being:
         print(" ")
 
     def train(self):
+        print("You spend some time training...")
+        print(" ")
         time.sleep(5)
         train_exp = self.level*25
         self.exp_to_next_level = self.exp_to_next_level - 100
@@ -28,7 +30,7 @@ class Being:
             self.exp_to_next_level = self.level*100
             self.health = self.level*10
             self.attack_damage_range = f"{math.floor(self.level/2)} - {self.level}"
-        print("You practice some new combat techniques, and gain some EXP points.")
+        print("You practice some new combat techniques, and gain some 100 EXP points.")
         print(" ")
     
     def attack(self, opponent):
@@ -40,6 +42,8 @@ class Being:
         current_exp = exp - self.exp_to_next_level
         exp_lost = current_exp/2
         self.exp_to_next_level = self.exp_to_next_level + exp_lost
+        print(f"You run away and lose {exp_lost} EXP points.")
+        print(" ")
     
     def heal(self):
         heal = self.level*10
