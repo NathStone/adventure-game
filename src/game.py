@@ -40,6 +40,17 @@ class Being:
         current_exp = exp - self.exp_to_next_level
         exp_lost = current_exp/2
         self.exp_to_next_level = self.exp_to_next_level + exp_lost
+    
+    def heal(self):
+        heal = self.level*10
+        heal_quart = math.floor(heal/4)
+        heal_3_quart = heal - heal_quart
+        heal_amount = random.randint(heal_quart, heal_3_quart)
+        self.health = self.health + heal_amount
+        print(f"Health increased by {heal_amount}")
+        print(" ")
+        if self.health > heal:
+            self.health = heal
 
     def battle(self, opponent):
         turn = True
@@ -47,15 +58,32 @@ class Being:
         opponent_health = opponent.health
         while True:
             if turn == True:
-                self.attack(opponent)
+
+                def battle_attack():
+                    self.attack(opponent)
+
+                choices = {
+                    'Attack': battle_attack,
+                    'Heal': self.heal
+                }
+                questions = [
+                    inquirer.List('prompts',
+                                message=f"Choose your action",
+                                choices=list(choices.keys()),
+                                ),
+                ]
+                
+                answers = inquirer.prompt(questions, theme=BlueComposure())
+                result = choices[answers['prompts']]()
+
                 opponent_health = opponent.health
-                print(f"{self.name} attacks {opponent.name}")
+                print(f"{self.name} Attacks Level {opponent.level} {opponent.name}")
                 print(f"{opponent.name} Health = {opponent.health}")
                 print(" ")
             if turn == False:
                 opponent.attack(self)
                 self_health = self.health
-                print(f"{opponent.name} attacks {self.name}")
+                print(f"Level {opponent.level} {opponent.name} Attacks {self.name}")
                 print(f"{self.name} Health = {self.health}")
                 print(" ")
             if self_health < 1:
@@ -234,7 +262,7 @@ _#/|##########/\######(   /\   )######/\##########|\#_
         player.battle(foe)
 
     choices = {
-        'Attack': explore_battle,
+        'Battle': explore_battle,
         'Retreat': player.retreat
     }
     questions = [
