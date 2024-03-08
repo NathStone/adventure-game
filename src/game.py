@@ -163,6 +163,11 @@ class Being:
                     self.level += 1
                     self.exp_to_next_level = self.level*100
                     self.exp_to_next_level = self.exp_to_next_level - remaining_exp
+                    if self.exp_to_next_level <= 0:
+                        remaining_exp = self.exp_to_next_level * -1
+                        self.level += 1
+                        self.exp_to_next_level = self.level*100
+                        self.exp_to_next_level = self.exp_to_next_level - remaining_exp
                     self.health = self.level*10
                     self.attack_damage_range = f"{math.floor(self.level/2)} - {self.level}"
                 self.health = self.level*10
