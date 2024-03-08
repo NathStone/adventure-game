@@ -26,8 +26,12 @@ class Being:
         train_exp = self.level*25
         self.exp_to_next_level = self.exp_to_next_level - 100
         if self.exp_to_next_level <= 0:
+            print("Congrats your level has increased!")
+            print(" ")
+            remaining_exp = self.exp_to_next_level * -1
             self.level += 1
             self.exp_to_next_level = self.level*100
+            self.exp_to_next_level = self.exp_to_next_level - remaining_exp
             self.health = self.level*10
             self.attack_damage_range = f"{math.floor(self.level/2)} - {self.level}"
         print("You practice some new combat techniques, and gain some 100 EXP points.")
@@ -141,8 +145,12 @@ class Being:
                 print(" ")
                 self.exp_to_next_level = self.exp_to_next_level - opponent.exp_to_next_level
                 if self.exp_to_next_level <= 0:
+                    print("Congrats your level has increased!")
+                    print(" ")
+                    remaining_exp = self.exp_to_next_level * -1
                     self.level += 1
                     self.exp_to_next_level = self.level*100
+                    self.exp_to_next_level = self.exp_to_next_level - remaining_exp
                     self.health = self.level*10
                     self.attack_damage_range = f"{math.floor(self.level/2)} - {self.level}"
                 self.health = self.level*10
