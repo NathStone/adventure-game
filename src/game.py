@@ -71,7 +71,7 @@ class Being:
     
     def heal(self):
         heal = self.level*10
-        heal_quart = heal/4
+        heal_quart = math.ceil(heal/4)
         heal_amount = random.randint(1, heal_quart)
         self.health = self.health + heal_amount
         print(f"{self.name} performs some first aid on themself!")
