@@ -76,10 +76,10 @@ class Being:
         self.health = self.health + heal_amount
         print(f"{self.name} performs some first aid on themself!")
         print(f"Health increased by {heal_amount}")
-        print(f"{self.name} Health = {self.health}")
-        print(" ")
         if self.health > heal:
             self.health = heal
+        print(f"{self.name} Health = {self.health}")
+        print(" ")
 
     def battle(self, opponent):
         turn = True
