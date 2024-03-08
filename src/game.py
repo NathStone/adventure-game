@@ -25,7 +25,25 @@ class Being:
         time.sleep(5)
         train_exp = self.level*25
         self.exp_to_next_level = self.exp_to_next_level - 100
+        print("You practice some new combat techniques, and gain 100 EXP points.")
+        print(" ")
         if self.exp_to_next_level <= 0:
+            print("""
+         ⣠⠤⠤⣄⣠⣤⣤⡤⠤⠤⠤⠤⠤⠤⠤⣤⣤⣤⣠⠤⠤⣄⠀⠀⠀⠀
+⠀⠀    ⠀⡜⢁⡶⠶⢤⡇⠀⠈⠉⠉⠉⠉⠉⠉⠉⠉⠉⠀⠸⡦⠾⠶⡄⢳⠀⠀⠀
+⠀⠀    ⠀⡇⢸⠀⠀⠀⡃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⡇⢸⡆⠀⠀
+⠀⠀    ⠀⢧⠘⣆⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠇⠀⢠⠇⣸⠀⠀⠀
+⠀⠀    ⠀⠈⢦⡘⠦⣀⠹⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡞⣀⡴⠋⡰⠃⠀⠀⠀
+⠀⠀⠀    ⠀⠀⠙⠦⣌⡙⠻⣄⠀⠀⠀⠀⠀⠀⠀⠀⣠⠞⠋⣁⡴⠚⠁⠀⠀⠀⠀
+⠀⠀⠀⠀⠀    ⠀⠀⠀⠉⠉⠚⠳⣄⠀⠀⠀⠀⣠⠖⠓⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀    ⠀⠀⠀⠀⠀⠈⢳⡀⠀⡼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀    ⠀⠀⠀⠀⢀⡇⠸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    ⠀⢀⡜⠀⠀⢳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀  ⠀⠀  ⠀⠀⠀⠀⢀⣞⣀⣀⣀⣀⣳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀  ⠀⠀  ⠀⠀⣾⠉⠉⠉⠉⠉⠉⢹⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀  ⠀⠀  ⠀⠀⠀⢀⡷⠤⠤⠤⠤⠤⠤⠼⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀    ⠀⠀⠀⠀⠈⠓⠒⠒⠒⠒⠒⠒⠒⠁
+                """)
             print("Congrats your level has increased!")
             print(" ")
             remaining_exp = self.exp_to_next_level * -1
@@ -34,12 +52,14 @@ class Being:
             self.exp_to_next_level = self.exp_to_next_level - remaining_exp
             self.health = self.level*10
             self.attack_damage_range = f"{math.floor(self.level/2)} - {self.level}"
-        print("You practice some new combat techniques, and gain some 100 EXP points.")
-        print(" ")
     
     def attack(self, opponent):
         damage = random.randint(math.floor(self.level/2), self.level)
         opponent.health = opponent.health - damage
+        print(f"Level {self.level} {self.name} Attacks Level {opponent.level} {opponent.name}!")
+        print(f"{self.name} inflicts {damage} damage to {opponent.name}!")
+        print(f"{opponent.name} Health = {opponent.health}")
+        print(" ")
     
     def retreat(self):
         exp = self.level*100
@@ -54,15 +74,15 @@ class Being:
         heal_half = heal/2
         heal_amount = random.randint(1, heal_half)
         self.health = self.health + heal_amount
+        print(f"{self.name} performs some first aid on themself!")
         print(f"Health increased by {heal_amount}")
+        print(f"{self.name} Health = {self.health}")
         print(" ")
         if self.health > heal:
             self.health = heal
 
     def battle(self, opponent):
         turn = True
-        self_health = self.health
-        opponent_health = opponent.health
         while True:
             if turn == True:
 
@@ -79,21 +99,13 @@ class Being:
                                 choices=list(choices.keys()),
                                 ),
                 ]
-                
                 answers = inquirer.prompt(questions, theme=BlueComposure())
                 result = choices[answers['prompts']]()
 
-                opponent_health = opponent.health
-                print(f"{self.name} Attacks Level {opponent.level} {opponent.name}")
-                print(f"{opponent.name} Health = {opponent.health}")
-                print(" ")
             if turn == False:
                 opponent.attack(self)
-                self_health = self.health
-                print(f"Level {opponent.level} {opponent.name} Attacks {self.name}")
-                print(f"{self.name} Health = {self.health}")
-                print(" ")
-            if self_health < 1:
+                
+            if self.health < 1:
                 print("""
                        ______
                     .-"      "-.
@@ -113,7 +125,7 @@ class Being:
                 print("You Died!")
                 print(" ")
                 exit()
-            if opponent_health < 1:
+            if opponent.health < 1:
                 print("""
                                    .''.       
        .''.      .        *''*    :_\/_:     . 
@@ -124,7 +136,12 @@ class Being:
   '..'  ':::'     * /\ *     .'/.\'.   '
       *            *..*         :
                 """)
-                print("""
+                print(f"You Defeated {opponent.name}!")
+                print(f"You Gained {opponent.exp_to_next_level} EXP")
+                print(" ")
+                self.exp_to_next_level = self.exp_to_next_level - opponent.exp_to_next_level
+                if self.exp_to_next_level <= 0:
+                    print("""
          ⣠⠤⠤⣄⣠⣤⣤⡤⠤⠤⠤⠤⠤⠤⠤⣤⣤⣤⣠⠤⠤⣄⠀⠀⠀⠀
 ⠀⠀    ⠀⡜⢁⡶⠶⢤⡇⠀⠈⠉⠉⠉⠉⠉⠉⠉⠉⠉⠀⠸⡦⠾⠶⡄⢳⠀⠀⠀
 ⠀⠀    ⠀⡇⢸⠀⠀⠀⡃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⡇⢸⡆⠀⠀
@@ -140,11 +157,6 @@ class Being:
 ⠀⠀⠀⠀⠀  ⠀⠀  ⠀⠀⠀⢀⡷⠤⠤⠤⠤⠤⠤⠼⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀    ⠀⠀⠀⠀⠈⠓⠒⠒⠒⠒⠒⠒⠒⠁
                 """)
-                print(f"You Defeated {opponent.name}!")
-                print(f"You Gained {opponent.exp_to_next_level} EXP")
-                print(" ")
-                self.exp_to_next_level = self.exp_to_next_level - opponent.exp_to_next_level
-                if self.exp_to_next_level <= 0:
                     print("Congrats your level has increased!")
                     print(" ")
                     remaining_exp = self.exp_to_next_level * -1
@@ -160,12 +172,21 @@ class Being:
 
 def explore_func(player):
     goblin = Being("Goblin", random.randint(math.ceil(player.level/2), player.level))
-    rogue_knight = Being("Rogue Knight", random.randint(math.ceil(player.level/1.8), math.ceil(player.level*1.2)))
-    werewolf = Being("Werewolf", random.randint(math.ceil(player.level/1.6), math.ceil(player.level*1.4)))
-    ogre = Being("Ogre", random.randint(math.ceil(player.level/1.4), math.ceil(player.level*1.6)))
-    dragon = Being("Dragon", random.randint(math.ceil(player.level/1.2), math.ceil(player.level*1.8)))
+    rogue_knight = Being("Rogue Knight", random.randint(math.ceil(player.level/1.7), math.ceil(player.level*1.2)))
+    werewolf = Being("Werewolf", random.randint(math.ceil(player.level/1.3), math.ceil(player.level*1.4)))
+    ogre = Being("Ogre", random.randint(math.ceil(player.level), math.ceil(player.level*1.6)))
+    dragon = Being("Dragon", random.randint(math.ceil(player.level/0.8), math.ceil(player.level*2)))
 
-    ran_num = random.randint(1,5)
+    ran_num = 1
+    if player.level > 4:
+        ran_num = random.randint(1,2)
+    if player.level > 9:
+        ran_num = random.randint(1,3)
+    if player.level > 14:
+        ran_num = random.randint(1,4)
+    if player.level > 19:
+        ran_num = random.randint(1,5)
+    
     if ran_num == 1:
         foe = goblin
         picture = """
